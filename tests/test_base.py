@@ -52,7 +52,7 @@ def test_readlines(fb, fb_secure):
     lines = []
 
     while True:
-        line = fb.readline()
+        line = fb.readline(-1)
 
         if line in (None, ""):
             break

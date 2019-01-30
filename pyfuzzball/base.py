@@ -182,3 +182,32 @@ class FuzzballBase(object):
         """
 
         self.socket.sendall(s.encode('ascii'))
+
+    def login(self, user, password):
+        """Logs in as a given user and password.
+
+        Arguments:
+            user: str user name
+            password: str password
+
+        Returns:
+            boolean - True if login successful, false if not.
+        """
+
+        self.write("connect %s %s\r\n" % (user, password))
+
+        # See if we logged in
+        line = self.readline(-1)
+
+        if "either that player does not exist" in line.lower():
+            return False
+
+        # Put the line back in for readline since this will probably
+        # be the start of the motd
+        self.lines.insert(0, line)
+
+    def quit(self):
+        """Does a proper 'nice' QUIT and closes the connection."""
+
+        self.write("QUIT\r\n")
+        self.close()
