@@ -119,7 +119,8 @@ class MCP(FuzzballBase):
             matches = nego_re.match(line)
 
             if matches:
-                self.catalog[matches[1]] = (matches[2], matches[3])
+                self.catalog[matches.group(1)] = (matches.group(2), 
+                                                  matches.group(3))
 
         if time.time() >= end:
             raise RuntimeError("Timed out while getting event catalog.")
