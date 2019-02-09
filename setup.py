@@ -18,7 +18,7 @@ except FileNotFoundError:
 
 setup(
     name="pyfuzzball",
-    version="1.1",
+    version="1.2",
     description="Package for working with MUCKs and MCP.",
     long_description=long_description,
     long_description_content_type='text/markdown',

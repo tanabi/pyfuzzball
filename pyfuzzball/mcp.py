@@ -207,8 +207,7 @@ class MCP(FuzzballBase):
         Returns:
             Some random string
         """
-        return ''.join(random.choices(string.ascii_uppercase +
-                                      string.digits, k=10))
+        return str(random.randint(100000, 1000000))
 
     def version_compare(self, v1, v2):
         """This compares version 1 and version 2.  Returns in the
