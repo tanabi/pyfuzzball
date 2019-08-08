@@ -99,6 +99,6 @@ def test_call_and_process(fb, fb_secure):
     # See if we have proper results.
     assert 'org-fuzzball-help' in result[0]
 
-    assert result[0]['org-fuzzball-help']['message'] == 'entry'
-    assert 'text' in result[0]['org-fuzzball-help']['parameters']
-    assert len(result[0]['org-fuzzball-help']['parameters']['text']) == 3
+    assert result[0]['org-fuzzball-help'][0]['message'] == 'entry'
+    assert 'text' in result[0]['org-fuzzball-help'][0]['parameters']
+    assert len(result[0]['org-fuzzball-help'][0]['parameters']['text']) == 3

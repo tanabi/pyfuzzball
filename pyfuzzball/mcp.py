@@ -461,10 +461,17 @@ class MCP(FuzzballBase):
                 elif line[3] == ':':
                     # End
                     multi_liners = []
-                    return_value[current_req['package']] = {
-                        'message': current_req['message'],
-                        'parameters': current_req['parameters']
-                    }
+
+                    if current_req['package'] in return_value:
+                        return_value.append({
+                            'message': current_req['message'],
+                            'parameters': current_req['parameters']
+                        })
+                    else:
+                        return_value[current_req['package']] = [{
+                            'message': current_req['message'],
+                            'parameters': current_req['parameters']
+                        }]
 
                 continue
 
@@ -522,10 +529,16 @@ class MCP(FuzzballBase):
             parameters = {}
 
             if not len(parts[2]): # We're done!
-                return_value[desired_package] = {
-                    "message": mesg,
-                    "parameters": {}
-                }
+                if desired_package in return_value:
+                    return_value[desired_package].append({
+                        "message": mesg,
+                        "parameters": {}
+                    })
+                else:
+                    return_value[desired_package] = [{
+                        "message": mesg,
+                        "parameters": {}
+                    }]
 
                 continue
 
@@ -638,10 +651,18 @@ class MCP(FuzzballBase):
                         "parameters": parameters
                     }
             else:
-                return_value[desired_package] = {
-                    "message": mesg,
-                    "parameters": parameters
-                }
+                if desired_package in return_value:
+                    return_value[desired_package].append(
+                        {
+                            "message": mesg,
+                            "parameters": parameters
+                        }
+                    )
+                else:
+                    return_value[desired_package] = [{
+                        "message": mesg,
+                        "parameters": parameters
+                    }]
 
         # do we still have multi-liners to read?
         # I really need to join this code with the code in the loop,
@@ -677,9 +698,16 @@ class MCP(FuzzballBase):
             elif line[3] == ':':
                 # End
                 multi_liners = []
-                return_value[current_req['package']] = {
-                    'message': current_req['message'],
-                    'parameters': current_req['parameters']
-                }
+
+                if current_req['package'] in return_value:
+                    return_value[current_req['package']].append({
+                        'message': current_req['message'],
+                        'parameters': current_req['parameters']
+                    })
+                else:
+                    return_value[current_req['package']] = [{
+                        'message': current_req['message'],
+                        'parameters': current_req['parameters']
+                    }]
 
         return (return_value, unknown_lines)

@@ -117,10 +117,14 @@ class FuzzballBase(object):
         # I think this may be a bug in the buffer logic but it is a
         # little too painful to figure out why, so this seems to resolve
         # it.
+        #
+        # Further research has indicated that if we're in blocking mode
+        # (timeout = -1) then we use the empty string in here to know
+        # there is nothing to do.
         while len(self.lines):
             line = self.lines.pop(0)
 
-            if line:
+            if timeout < 0 or line:
                 return line
 
         # If we would block, let's go ahead and return.
