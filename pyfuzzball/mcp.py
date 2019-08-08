@@ -397,6 +397,7 @@ class MCP(FuzzballBase):
 
         # We got nothing if there are no lines
         if not lines:
+            print("NO LINES")
             return ({}, [])
 
         return_value = {}

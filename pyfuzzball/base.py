@@ -112,8 +112,16 @@ class FuzzballBase(object):
         """
 
         # If we've got lines, send 'em
-        if len(self.lines):
-            return self.lines.pop(0)
+        #
+        # Sometimes this has blanks -- kick the blanks out.
+        # I think this may be a bug in the buffer logic but it is a
+        # little too painful to figure out why, so this seems to resolve
+        # it.
+        while len(self.lines):
+            line = self.lines.pop(0)
+
+            if line:
+                return line
 
         # If we would block, let's go ahead and return.
         if timeout < 0:
@@ -122,6 +130,7 @@ class FuzzballBase(object):
             ev = self.selector.select(timeout)
 
         if not len(ev):
+            print("Select returned nothing")
             return ""
 
         # We have data - do we have a partial line in the buffer?
@@ -131,6 +140,9 @@ class FuzzballBase(object):
         # Read as much data as we can into the buffer.
         while True:
             line = self.socket.recv(1024).decode('ascii')
+
+            print("Got:")
+            print(line)
 
             # Python will give an empty string if the connection is closed.
             # But select will keep saying there is data to read.  Thus making
@@ -180,6 +192,9 @@ class FuzzballBase(object):
         Returns:
             Nothing
         """
+
+        print("Sending:")
+        print(s)
 
         self.socket.sendall(s.encode('ascii'))
 
