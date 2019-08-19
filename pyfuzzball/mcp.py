@@ -463,7 +463,7 @@ class MCP(FuzzballBase):
                     multi_liners = []
 
                     if current_req['package'] in return_value:
-                        return_value.append({
+                        return_value[current_req['package']].append({
                             'message': current_req['message'],
                             'parameters': current_req['parameters']
                         })
