@@ -39,7 +39,7 @@ class MCP(FuzzballBase):
         tries = 0
 
         while not mcp_proto and tries < 3:
-            mcp_proto = self.readline(10)
+            mcp_proto = self.readline(10).strip()
             tries = tries + 1
 
         if tries >= 3:

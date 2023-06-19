@@ -142,7 +142,7 @@ class FuzzballBase(object):
 
         # Read as much data as we can into the buffer.
         while True:
-            line = self.socket.recv(1024).decode('ascii')
+            line = self.socket.recv(1024).decode('ascii', errors='ignore')
 
             # Python will give an empty string if the connection is closed.
             # But select will keep saying there is data to read.  Thus making
